@@ -1,56 +1,78 @@
 <script setup>
-import {ref, computed, toRefs} from 'vue';
+import { ref, computed, toRefs } from 'vue';
+
 const props = defineProps({
-  id: Number,
-  title: String,
-  description: String,
-  image: String,
-  price: Number,
-  rate: Number,
-  count: Number
-})
-
-const showFull = ref(false);
-const { description } = toRefs(props);
-
-const truncatedDescription = computed(() => {
-  if (!description.value) return '';
-  if (showFull.value) return description.value;
-  return description.value.length > 200
-      ? description.value.slice(0, 200) + '...'
-      : description.value;
+  item: {
+    type: Object,
+    required: true,
+  },
 });
 
-const isTruncated = computed(() => description.value && description.value.length > 200 && !showFull.value);
+const { item } = toRefs(props);
+
+const showFull = ref(false);
+const inOrder = ref(false);
+const emit = defineEmits(['changeOrder']);
+
+
+const truncatedDescription = computed(() => {
+  const description = item.value.description;
+  if (!description) return '';
+  if (showFull.value) return description;
+  return description.length > 200 ? description.slice(0, 200) + '...' : description;
+});
+
+
+const isTruncated = computed(() => {
+  const description = item.value.description;
+  return description && description.length > 200 && !showFull.value;
+});
+
 
 function showFullDescription() {
   showFull.value = true;
 }
+
+function addToCard(el) {
+  inOrder.value = !inOrder.value;
+  emit('changeOrder', [inOrder.value, el]);
+}
 </script>
+
 
 
 <template>
   <v-card class="card" :elevation="2">
     <div class="image-container">
-      <v-img :src="image" contain class="product-image"></v-img>
+      <v-img :src="item.image" contain class="product-image"></v-img>
     </div>
-    <v-card-title>{{ title }}</v-card-title>
+    <v-card-title>{{ item.title }}</v-card-title>
     <v-card-text class="card-content">
-      <p class="card-description"> {{ truncatedDescription }}
-        <span  v-if="isTruncated">
+      <p class="card-description">
+        {{ truncatedDescription }}
+        <span v-if="isTruncated">
           <a href="#" @click.prevent="showFullDescription">More</a>
-        </span></p>
+        </span>
+      </p>
 
       <div class="details">
-        <p><strong>Price:</strong> ${{ price }}</p>
-        <p><strong>Rate:</strong> {{ rate }} ({{ count }} reviews)</p>
+        <p><strong>Price:</strong> ${{ item.price }}</p>
+        <p><strong>Rate:</strong> {{ item.rate }} ({{ item.count }} reviews)</p>
       </div>
     </v-card-text>
     <v-card-actions>
-      <v-btn class="add-btn"  color="#fff" >Add to Cart</v-btn>
+      <v-btn
+          @click="addToCard(item)"
+          class="add-btn"
+          :color="'white'"
+          :class="{ active: inOrder }"
+      >
+        {{ inOrder ? 'Remove from Cart' : 'Add to Cart' }}
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
+
 
 <style scoped>
 
@@ -82,5 +104,8 @@ function showFullDescription() {
 }
 .add-btn{
   background: #535bf2;
+}
+.add-btn.active{
+  background: #c62424;
 }
 </style>
