@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, toRefs } from 'vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   item: {
@@ -9,10 +10,20 @@ const props = defineProps({
 });
 
 const { item } = toRefs(props);
+const router = useRouter();
 
 const showFull = ref(false);
 const inOrder = ref(false);
 const emit = defineEmits(['changeOrder']);
+
+const orderData = JSON.parse(localStorage.getItem('orderData') || '[]');
+
+if (orderData.some((orderItem) => orderItem.id === item.value.id)) {
+
+  inOrder.value = true
+} else {
+  inOrder.value = false
+}
 
 
 const truncatedDescription = computed(() => {
@@ -23,11 +34,11 @@ const truncatedDescription = computed(() => {
 });
 
 
+
 const isTruncated = computed(() => {
   const description = item.value.description;
   return description && description.length > 200 && !showFull.value;
 });
-
 
 function showFullDescription() {
   showFull.value = true;
@@ -37,9 +48,13 @@ function addToCard(el) {
   inOrder.value = !inOrder.value;
   emit('changeOrder', [inOrder.value, el]);
 }
+
+function navigateToDetail(el) {
+  localStorage.setItem('detailItem', JSON.stringify(el));
+  router.push({ name: 'CatalogItem', params: { id: item.value.id, item:item } });
+
+}
 </script>
-
-
 
 <template>
   <v-card class="card" :elevation="2">
@@ -69,13 +84,18 @@ function addToCard(el) {
       >
         {{ inOrder ? 'Remove from Cart' : 'Add to Cart' }}
       </v-btn>
+      <v-btn
+          class="add-btn"
+          :color="'white'"
+          @click="navigateToDetail(item)"
+      >
+        See Detail
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
-
 <style scoped>
-
 .card {
   max-width: 400px;
   margin: 16px auto;
