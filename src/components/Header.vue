@@ -11,31 +11,36 @@
       >
         {{ item.label }}
       </v-btn>
+
+      <p class="user-name" v-if="userStore.isLoggedIn">
+        {{ userStore.userData.firstName }}
+      </p>
     </v-row>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      menuItems: [
-        { index: 1, label: "Main", to: { name: 'Main' } },
-        { index: 2, label: "Catalog", to: { name: 'Catalog' } },
-        { index: 3, label: "Admin panel", to: { name: 'Login' } },
-        { index: 4, label: "Basket", to: { name: 'Basket' } },
-      ],
-    };
-  },
-};
+<script setup>
+import { useUserStore } from "../store/useUserStore";
+
+const userStore = useUserStore();
+
+const menuItems = [
+  { index: 1, label: "Main", to: { name: "Main" } },
+  { index: 2, label: "Catalog", to: { name: "Catalog" } },
+  { index: 3, label: "Admin panel", to: { name: "Login" } },
+  { index: 4, label: "Basket", to: { name: "Basket" } },
+];
 </script>
 
 <style scoped>
 .header-block {
-  width: 100%;
-  margin: 30px;
+  max-width: 1920px;
+  margin: 30px auto;
 }
-
+.user-name {
+  position: absolute;
+  right: 40px;
+}
 .v-btn {
   font-size: 16px;
   text-transform: none;

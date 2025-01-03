@@ -2,7 +2,8 @@
   <MainLayout>
     <template #main>
       <v-container>
-        <v-form ref="form" v-if="!isAuth">
+
+        <v-form v-if="!userStore.isLoggedIn" @submit.prevent="loginUser">
           <v-row>
             <v-col cols="12">
               <v-text-field
@@ -22,21 +23,22 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-btn color="primary" class="btn-login" @click="loginUser">
+              <v-btn color="primary" class="btn-login" type="submit">
                 Войти
               </v-btn>
             </v-col>
           </v-row>
         </v-form>
 
-        <v-row v-if="isAuth">
+
+        <v-row v-if="userStore.isLoggedIn">
           <v-col cols="12">
             <v-btn color="primary" class="btn-logout" @click="logoutUser">
               Выйти
             </v-btn>
           </v-col>
           <v-col cols="12">
-          <AddGoodsForm/>
+            <UserForm />
           </v-col>
         </v-row>
       </v-container>
@@ -46,53 +48,30 @@
 
 <script setup>
 import MainLayout from "../layout/MainLayout.vue";
-import CreateGoods from '../components/AddGoodsForm.vue';
-import { ref, onMounted } from "vue";
+import UserForm from "../components/UserForm.vue";
+import { ref } from "vue";
+import { useUserStore } from "../store/useUserStore";
 import { useRouter } from "vue-router";
-import AddGoodsForm from "../components/AddGoodsForm.vue";
 
+const userStore = useUserStore();
 const login = ref(null);
 const password = ref(null);
-const isAuth = ref(false);
 const router = useRouter();
 
 const rules = {
-  required: value => {
-    return value && value.length > 0 || "Поле обязательно для заполнения";
-  },
+  required: value => !!value || "Поле обязательно для заполнения",
 };
 
-onMounted(() => {
-  isAuth.value = localStorage.getItem('auth') === 'true';
-});
-
 function loginUser() {
-  if (login.value === 'admin' && password.value === '123') {
-    isAuth.value = true;
-    localStorage.setItem('auth', 'true');
+  if (login.value === "admin" && password.value === "123") {
+    userStore.login(login.value);
+    router.push({ name: "AdminPanel" });
   }
 }
 
 function logoutUser() {
-  isAuth.value = false;
-  localStorage.setItem('auth', 'false');
-  router.push({ name: 'Main' });
-}
-
-function createGood(el) {
-  let items = JSON.parse(localStorage.getItem('items'));
-  let maxId = 0;
-  if (items !== null) {
-    items.forEach((item) => {
-      if (maxId <= item.id) maxId = item.id;
-    });
-    el.id = maxId + 1;
-  } else {
-    items = [];
-    el.id = 1;
-  }
-  items.push(el);
-  localStorage.setItem('items', JSON.stringify(items));
+  userStore.logout();
+  router.push({name: "Main"});
 }
 </script>
 

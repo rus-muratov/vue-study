@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
+import {ref, computed, toRefs} from 'vue';
+import {useRouter} from 'vue-router';
+import {useProductStore} from '../store/productStore';
 
 const props = defineProps({
   item: {
@@ -9,22 +10,12 @@ const props = defineProps({
   },
 });
 
-const { item } = toRefs(props);
+const {item} = toRefs(props);
 const router = useRouter();
+const productStore = useProductStore();
 
 const showFull = ref(false);
-const inOrder = ref(false);
-const emit = defineEmits(['changeOrder']);
-
-const orderData = JSON.parse(localStorage.getItem('orderData') || '[]');
-
-if (orderData.some((orderItem) => orderItem.id === item.value.id)) {
-
-  inOrder.value = true
-} else {
-  inOrder.value = false
-}
-
+const inOrder = computed(() => productStore.order.some(orderItem => orderItem.id === item.value.id));
 
 const truncatedDescription = computed(() => {
   const description = item.value.description;
@@ -32,8 +23,6 @@ const truncatedDescription = computed(() => {
   if (showFull.value) return description;
   return description.length > 200 ? description.slice(0, 200) + '...' : description;
 });
-
-
 
 const isTruncated = computed(() => {
   const description = item.value.description;
@@ -44,15 +33,13 @@ function showFullDescription() {
   showFull.value = true;
 }
 
-function addToCard(el) {
-  inOrder.value = !inOrder.value;
-  emit('changeOrder', [inOrder.value, el]);
+function toggleInOrder() {
+  productStore.toggleOrder(item.value, !inOrder.value);
 }
 
-function navigateToDetail(el) {
-  localStorage.setItem('detailItem', JSON.stringify(el));
-  router.push({ name: 'CatalogItem', params: { id: item.value.id, item:item } });
-
+function navigateToDetail() {
+  localStorage.setItem('detailItem', JSON.stringify(item.value));
+  router.push({name: 'CatalogItem', params: {id: item.value.id, item: item.value}});
 }
 </script>
 
@@ -77,7 +64,7 @@ function navigateToDetail(el) {
     </v-card-text>
     <v-card-actions>
       <v-btn
-          @click="addToCard(item)"
+          @click="toggleInOrder"
           class="add-btn"
           :color="'white'"
           :class="{ active: inOrder }"
@@ -87,7 +74,7 @@ function navigateToDetail(el) {
       <v-btn
           class="add-btn"
           :color="'white'"
-          @click="navigateToDetail(item)"
+          @click="navigateToDetail"
       >
         See Detail
       </v-btn>
@@ -104,28 +91,34 @@ function navigateToDetail(el) {
   justify-content: space-between;
   min-height: 550px;
 }
+
 .card-content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 .product-image {
   height: 200px;
   width: 100%;
   object-fit: cover;
   border-radius: 8px 8px 0 0;
 }
-.image-container{
+
+.image-container {
   padding: 16px;
 }
+
 .details {
   margin-top: 8px;
 }
-.add-btn{
+
+.add-btn {
   background: #535bf2;
 }
-.add-btn.active{
+
+.add-btn.active {
   background: #c62424;
 }
 </style>

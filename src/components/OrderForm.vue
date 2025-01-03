@@ -1,43 +1,40 @@
 <script setup>
-import {COUNTRIES} from "../api/moks";
-import {ref} from "vue";
-import {sendFormData} from "../api/formApi.js";
+import { ref, computed, watch, onMounted } from "vue";
+import { useBasketStore } from "../store/basketStore.js";
+import { COUNTRIES } from "../api/moks";
+import { sendFormData } from "../api/formApi.js";
+
+
+const basketStore = useBasketStore();
+const form = ref(null);
+const isValid = ref(false);
 
 const firstName = ref("");
 const phoneNumber = ref("");
 const selectedCountry = ref(null);
 const email = ref("");
 
-const form = ref(null);
-const isValid = ref(false);
+onMounted(() => {
+  basketStore.updateOrderData();
+});
 
-const orderData = JSON.parse(localStorage.getItem('orderData') || '[]');
-const count = ref(0);
-const price = ref(0);
-
-
-if (orderData.length) {
-  orderData.forEach((item) => {
-    count.value++;
-    price.value += item.price;
-  });
-}
+const count = computed(() => basketStore.count);
+const totalPrice = computed(() => basketStore.totalPrice);
 
 const firstNameRules = [
-  v => !!v || "First name is required",
-  v => (v && v.length >= 3) || "First name must be at least 3 characters",
+  (v) => !!v || "First name is required",
+  (v) => (v && v.length >= 3) || "First name must be at least 3 characters",
 ];
 
 const phoneNumberRules = [
-  v => !!v || "Phone number is required",
-  v => /^\d{7}$/.test(v) || "Phone number must be 7 digits",
+  (v) => !!v || "Phone number is required",
+  (v) => /^\d{7}$/.test(v) || "Phone number must be 7 digits",
 ];
 
 const emailRules = [
-  v => !!v || "E-mail is required",
-  v =>
-      /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(v) ||
-      "Must be a valid e-mail address",
+  (v) => !!v || "E-mail is required",
+  (v) =>
+      /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(v) || "Must be a valid e-mail address",
 ];
 
 async function submitForm() {
@@ -47,7 +44,7 @@ async function submitForm() {
       phoneNumber: phoneNumber.value,
       selectedCountry: selectedCountry.value,
       email: email.value,
-      order: orderData
+      order: basketStore.orderData,
     };
     try {
       const response = await sendFormData(formData);
@@ -60,6 +57,7 @@ async function submitForm() {
   }
 }
 </script>
+
 
 <template>
   <v-sheet class="mx-auto" width="600">
@@ -108,9 +106,15 @@ async function submitForm() {
         <v-col cols="12" md="12">
           <v-card outlined>
             <v-card-text>
-
               <div class="links">
-                <a class="link" v-for="item in orderData" :key="item.id" :href="`/catalog/${item.id}`">{{item.title}}</a>
+                <a
+                    class="link"
+                    v-for="item in basketStore.orderData"
+                    :key="item.id"
+                    :href="`/catalog/${item.id}`"
+                >
+                  {{ item.title }}
+                </a>
               </div>
               <v-divider class="my-4"></v-divider>
               <div class="count-items">
@@ -122,9 +126,8 @@ async function submitForm() {
               <div class="count-price">
                 <v-icon class="mr-2">mdi-currency-usd</v-icon>
                 <span class="font-weight-bold">Total price:</span>
-                <span class="ml-1">{{ price }}</span>
+                <span class="ml-1">{{ totalPrice }}</span>
               </div>
-
             </v-card-text>
           </v-card>
         </v-col>
@@ -151,7 +154,8 @@ async function submitForm() {
 .submit-btn {
   margin-top: 5px;
 }
-.link{
+
+.link {
   display: block;
 }
 </style>
