@@ -24,70 +24,119 @@ const birthdayRules = [
 
 const emailRules = [
   (v) => !!v || "E-mail is required",
-  (v) =>
-      /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(v) || "Must be a valid e-mail address",
+  (v) => /\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(v) || "Must be a valid e-mail address",
 ];
 
+function validateField(value, rules) {
+  for (const rule of rules) {
+    const result = rule(value);
+    if (result !== true) {
+      return result;
+    }
+  }
+  return true;
+}
+
 function submitForm() {
-  if (isValid.value) {
+  const firstNameError = validateField(firstName.value, firstNameRules);
+  const lastNameError = validateField(lastName.value, lastNameRules);
+  const emailError = validateField(email.value, emailRules);
+
+  if (firstNameError === true && lastNameError === true && emailError === true) {
     const formData = {
       firstName: firstName.value,
       lastName: lastName.value,
       birthday: birthday.value,
       email: email.value,
     };
-    localStorage.setItem('userData', JSON.stringify(formData));
+    localStorage.setItem("userData", JSON.stringify(formData));
+    alert("Form submitted successfully!");
   } else {
     console.error("Form validation failed");
+    alert("Please correct the errors before submitting.");
   }
 }
 </script>
 
 <template>
-  <v-container>
-    <v-form v-model="isValid" class="form-container" @submit.prevent="submitForm">
-      <v-text-field
-          v-model="firstName"
-          :rules="firstNameRules"
-          label="First Name"
-          required
-      ></v-text-field>
+  <div class="form-container">
+    <form id="user-form" @submit.prevent="submitForm">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+            id="firstName"
+            v-model="firstName"
+            type="text"
+            @blur="validateField(firstName, firstNameRules)"
+            required
+        />
+      </div>
 
-      <v-text-field
-          v-model="lastName"
-          :rules="lastNameRules"
-          label="Last Name"
-          required
-      ></v-text-field>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+            id="lastName"
+            v-model="lastName"
+            type="text"
+            @blur="validateField(lastName, lastNameRules)"
+            required
+        />
+      </div>
 
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+            id="email"
+            v-model="email"
+            type="email"
+            @blur="validateField(email, emailRules)"
+            required
+        />
+      </div>
 
-
-      <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="Email"
-          required
-      ></v-text-field>
-
-      <v-btn
-          class="submit-btn"
-          type="submit"
-          block
-          color="primary"
-      >
-        Submit
-      </v-btn>
-    </v-form>
-  </v-container>
+      <button id="submit-personal" type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
 </template>
 
 <style scoped>
 .form-container {
   max-width: 600px;
   margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .submit-btn {
-  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
 }
 </style>

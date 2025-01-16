@@ -13,6 +13,7 @@ export const useBasketStore = defineStore("basket", {
         addToOrder(item) {
             this.orderData.push(item);
             localStorage.setItem("orderData", JSON.stringify(this.orderData));
+
         },
         removeFromOrder(itemId) {
             this.orderData = this.orderData.filter((item) => item.id !== itemId);

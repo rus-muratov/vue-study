@@ -8,4 +8,13 @@ export default defineConfig({
     vue(),
     vuetify({ autoImport: true }),
   ],
+  test: {
+    environment: "jsdom",
+    globals: true,
+    server: {
+      deps: {
+        inline: ['vuetify'],
+      },
+    },
+  }
 })

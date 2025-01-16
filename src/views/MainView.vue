@@ -13,11 +13,6 @@
 import MainLayout from "../layout/MainLayout.vue";
 import Catalog from "../components/Catalog.vue";
 
-
-
-
-
-
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <script setup>
-import {ref, computed, toRefs} from 'vue';
-import {useRouter} from 'vue-router';
-import {useProductStore} from '../store/productStore';
+import { ref, computed, toRefs } from "vue";
+import { useRouter } from "vue-router";
+import { useBasketStore } from "../store/basketStore";
 
 const props = defineProps({
   item: {
@@ -10,18 +10,22 @@ const props = defineProps({
   },
 });
 
-const {item} = toRefs(props);
+const { item } = toRefs(props);
 const router = useRouter();
-const productStore = useProductStore();
+const basketStore = useBasketStore();
 
 const showFull = ref(false);
-const inOrder = computed(() => productStore.order.some(orderItem => orderItem.id === item.value.id));
+const inOrder = computed(() =>
+    basketStore.orderData.some((orderItem) => orderItem.id === item.value.id)
+);
 
 const truncatedDescription = computed(() => {
   const description = item.value.description;
-  if (!description) return '';
+  if (!description) return "";
   if (showFull.value) return description;
-  return description.length > 200 ? description.slice(0, 200) + '...' : description;
+  return description.length > 200
+      ? description.slice(0, 200) + "..."
+      : description;
 });
 
 const isTruncated = computed(() => {
@@ -34,22 +38,29 @@ function showFullDescription() {
 }
 
 function toggleInOrder() {
-  productStore.toggleOrder(item.value, !inOrder.value);
+  if (inOrder.value) {
+    basketStore.removeFromOrder(item.value.id);
+  } else {
+    basketStore.addToOrder(item.value);
+  }
 }
 
 function navigateToDetail() {
-  localStorage.setItem('detailItem', JSON.stringify(item.value));
-  router.push({name: 'CatalogItem', params: {id: item.value.id, item: item.value}});
+  localStorage.setItem("detailItem", JSON.stringify(item.value));
+  router.push({
+    name: "CatalogItem",
+    params: {id: item.value.id, item: item.value},
+  });
 }
 </script>
 
 <template>
-  <v-card class="card" :elevation="2">
+  <div class="card">
     <div class="image-container">
-      <v-img :src="item.image" contain class="product-image"></v-img>
+      <img :src="item.image" alt="Product Image" class="product-image"/>
     </div>
-    <v-card-title>{{ item.title }}</v-card-title>
-    <v-card-text class="card-content">
+    <h3 class="card-title">{{ item.title }}</h3>
+    <div class="card-content">
       <p class="card-description">
         {{ truncatedDescription }}
         <span v-if="isTruncated">
@@ -61,42 +72,44 @@ function navigateToDetail() {
         <p><strong>Price:</strong> ${{ item.price }}</p>
         <p><strong>Rate:</strong> {{ item.rate }} ({{ item.count }} reviews)</p>
       </div>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn
+    </div>
+    <div class="card-actions">
+      <button
           @click="toggleInOrder"
           class="add-btn"
-          :color="'white'"
           :class="{ active: inOrder }"
+          :data-item-id="item.id"
       >
-        {{ inOrder ? 'Remove from Cart' : 'Add to Cart' }}
-      </v-btn>
-      <v-btn
-          class="add-btn"
-          :color="'white'"
-          @click="navigateToDetail"
-      >
-        See Detail
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+        {{ inOrder ? "Remove" : "Add" }}
+      </button>
+      <button class="" @click="navigateToDetail">Detail</button>
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .card {
-  max-width: 400px;
+  width: 350px;
   margin: 16px auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 550px;
+  min-height: 600px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin: 0px 16px;
 }
 
 .card-content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  padding: 0 16px;
 }
 
 .product-image {
@@ -116,9 +129,25 @@ function navigateToDetail() {
 
 .add-btn {
   background: #535bf2;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .add-btn.active {
   background: #c62424;
+}
+
+.add-btn:hover {
+  background: #3e4bd8;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
 }
 </style>

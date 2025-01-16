@@ -5,18 +5,17 @@ const apiProduct = import.meta.env.VITE_PRODUCT_API_URL;
 
 export const useProductStore = defineStore('product', {
     state: () => ({
-        items: [], // Список продуктов
-        order: JSON.parse(localStorage.getItem('orderData') || '[]'), // Заказ, загружаемый из localStorage
+        items: [],
+        order: JSON.parse(localStorage.getItem('orderData') || '[]'),
     }),
     actions: {
         async getProducts() {
-            this.items = await apiRequest(apiProduct); // Загрузка продуктов
+            this.items = await apiRequest(apiProduct);
         },
         addProduct(product) {
-            this.items.push(product); // Добавление продукта в список
+            this.items.push(product);
         },
         addToOrder(product) {
-            // Проверяем, есть ли уже продукт в заказе
             if (!this.order.some(item => item.id === product.id)) {
                 this.order.push(product);
                 localStorage.setItem('orderData', JSON.stringify(this.order));
@@ -25,7 +24,6 @@ export const useProductStore = defineStore('product', {
             }
         },
         removeFromOrder(productId) {
-            // Находим индекс продукта в заказе
             const index = this.order.findIndex(item => item.id === productId);
             if (index !== -1) {
                 this.order.splice(index, 1);
@@ -35,7 +33,6 @@ export const useProductStore = defineStore('product', {
             }
         },
         toggleOrder(product, add) {
-            // Добавление или удаление продукта в зависимости от флага
             if (add) {
                 this.addToOrder(product);
             } else {

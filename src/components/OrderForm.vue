@@ -4,7 +4,6 @@ import { useBasketStore } from "../store/basketStore.js";
 import { COUNTRIES } from "../api/moks";
 import { sendFormData } from "../api/formApi.js";
 
-
 const basketStore = useBasketStore();
 const form = ref(null);
 const isValid = ref(false);
@@ -37,7 +36,45 @@ const emailRules = [
       /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(v) || "Must be a valid e-mail address",
 ];
 
+const errors = ref({
+  firstName: [],
+  phoneNumber: [],
+  selectedCountry: [],
+  email: [],
+});
+
+watch([firstName, phoneNumber, selectedCountry, email], () => {
+  validateForm();
+});
+
+function validateField(value, rules) {
+  const fieldErrors = [];
+  rules.forEach((rule) => {
+    const result = rule(value);
+    if (result !== true) {
+      fieldErrors.push(result);
+    }
+  });
+  return fieldErrors;
+}
+
+function validateForm() {
+  errors.value.firstName = validateField(firstName.value, firstNameRules);
+  errors.value.phoneNumber = validateField(phoneNumber.value, phoneNumberRules);
+  errors.value.selectedCountry = validateField(selectedCountry.value, [
+    (v) => !!v || "Country is required",
+  ]);
+  errors.value.email = validateField(email.value, emailRules);
+
+  isValid.value =
+      errors.value.firstName.length === 0 &&
+      errors.value.phoneNumber.length === 0 &&
+      errors.value.selectedCountry.length === 0 &&
+      errors.value.email.length === 0;
+}
+
 async function submitForm() {
+  validateForm();
   if (isValid.value) {
     const formData = {
       firstName: firstName.value,
@@ -49,6 +86,7 @@ async function submitForm() {
     try {
       const response = await sendFormData(formData);
       console.log("Form submitted successfully:", response);
+      // Optionally, reset form fields here
     } catch (error) {
       console.error("Failed to submit form:", error);
     }
@@ -59,103 +97,111 @@ async function submitForm() {
 </script>
 
 
+
 <template>
-  <v-sheet class="mx-auto" width="600">
-    <v-form
-        ref="form"
-        v-model="isValid"
-        class="form-container"
-        @submit.prevent="submitForm"
-    >
-      <v-text-field
-          v-model="firstName"
-          :rules="firstNameRules"
-          label="First Name"
-          required
-      ></v-text-field>
+  <div id="basket-form" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded">
+    <form @submit.prevent="submitForm" novalidate>
+      <!-- First Name -->
+      <div class="mb-4">
+        <label for="firstName" class="block text-gray-700">First Name<span class="text-red-500">*</span></label>
+        <input
+            id="firstName"
+            type="text"
+            v-model="firstName"
+            class="mt-1 block w-full border rounded px-3 py-2"
+            required
+        />
+        <div v-if="errors.firstName.length" class="text-red-500 text-sm mt-1">
+          <div v-for="(error, index) in errors.firstName" :key="index">{{ error }}</div>
+        </div>
+      </div>
 
-      <v-text-field
-          v-model="phoneNumber"
-          :rules="phoneNumberRules"
-          label="Phone Number"
-          counter="7"
-          required
-      ></v-text-field>
+      <!-- Phone Number -->
+      <div class="mb-4">
+        <label for="phoneNumber" class="block text-gray-700">Phone Number<span class="text-red-500">*</span></label>
+        <input
+            id="phoneNumber"
+            type="text"
+            v-model="phoneNumber"
+            maxlength="7"
+            class="mt-1 block w-full border rounded px-3 py-2"
+            required
+        />
+        <div v-if="errors.phoneNumber.length" class="text-red-500 text-sm mt-1">
+          <div v-for="(error, index) in errors.phoneNumber" :key="index">{{ error }}</div>
+        </div>
+      </div>
 
-      <v-select
-          v-model="selectedCountry"
-          :items="COUNTRIES"
-          :rules="[v => !!v || 'Country is required']"
-          label="Select Country"
-          required
-      ></v-select>
+      <!-- Select Country -->
+      <div class="mb-4">
+        <label for="country" class="block text-gray-700">Select Country<span class="text-red-500">*</span></label>
+        <select
+            id="country"
+            v-model="selectedCountry"
+            class="mt-1 block w-full border rounded px-3 py-2"
+            required
+        >
+          <option disabled value="">Please select one</option>
+          <option v-for="country in COUNTRIES" :key="country.code" :value="country.name">
+            {{ country.name }}
+          </option>
+        </select>
+        <div v-if="errors.selectedCountry.length" class="text-red-500 text-sm mt-1">
+          <div v-for="(error, index) in errors.selectedCountry" :key="index">{{ error }}</div>
+        </div>
+      </div>
 
-      <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="E-mail"
-          required
-      ></v-text-field>
+      <!-- E-mail -->
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700">E-mail<span class="text-red-500">*</span></label>
+        <input
+            id="email"
+            type="email"
+            v-model="email"
+            class="mt-1 block w-full border rounded px-3 py-2"
+            required
+        />
+        <div v-if="errors.email.length" class="text-red-500 text-sm mt-1">
+          <div v-for="(error, index) in errors.email" :key="index">{{ error }}</div>
+        </div>
+      </div>
 
-      <v-row
-          v-if="count > 0"
-          justify="center"
-          align="center"
-          class="text-center"
-      >
-        <v-col cols="12" md="12">
-          <v-card outlined>
-            <v-card-text>
-              <div class="links">
-                <a
-                    class="link"
-                    v-for="item in basketStore.orderData"
-                    :key="item.id"
-                    :href="`/catalog/${item.id}`"
-                >
-                  {{ item.title }}
-                </a>
-              </div>
-              <v-divider class="my-4"></v-divider>
-              <div class="count-items">
-                <v-icon class="mr-2">mdi-cart</v-icon>
-                <span class="font-weight-bold">Total items:</span>
-                <span class="ml-1">{{ count }}</span>
-              </div>
-              <v-divider class="my-4"></v-divider>
-              <div class="count-price">
-                <v-icon class="mr-2">mdi-currency-usd</v-icon>
-                <span class="font-weight-bold">Total price:</span>
-                <span class="ml-1">{{ totalPrice }}</span>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
 
-      <v-btn
-          @click="submitForm"
-          class="submit-btn mt-2"
+      <div v-if="count > 0" class="mb-6 ">
+        <div class="border-t border-b py-4">
+          <h3 class="text-lg font-semibold mb-2">Order Summary</h3>
+          <ul class="items">
+            <li v-for="item in basketStore.orderData" :key="item.id" class="flex justify-between item">
+              <a :href="`/catalog/${item.id}`" class="item-title text-blue-500 hover:underline">{{ item.title }}</a>
+            </li>
+          </ul>
+          <div class="mt-4">
+            <span class="font-semibold">Total items:</span> <span class="total">{{ count }}</span>
+          </div>
+          <div class="mt-2">
+            <span class="font-semibold">Total price:</span> ${{ totalPrice.toFixed(2) }}
+          </div>
+        </div>
+      </div>
+
+
+      <button
           type="submit"
-          block
-          color="primary"
+          class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
       >
         Submit
-      </v-btn>
-    </v-form>
-  </v-sheet>
+      </button>
+    </form>
+  </div>
 </template>
 
+
 <style scoped>
-.form-container {
-  margin-bottom: 50px;
-}
-
-.submit-btn {
-  margin-top: 5px;
-}
-
-.link {
+label{
+  width: 300px;
   display: block;
+}
+input{
+  width: 300px;
 }
 </style>

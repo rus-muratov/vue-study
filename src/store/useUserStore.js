@@ -4,7 +4,7 @@ export const useUserStore = defineStore("user", {
     state: () => {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const userData = JSON.parse(localStorage.getItem('userData')) || {
-            firstName: 'Anonymous',
+            firstName: 'Admin',
             lastName: '',
             email: ''
         };
