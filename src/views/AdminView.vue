@@ -65,7 +65,6 @@ const rules = {
 function loginUser() {
   if (login.value === "admin" && password.value === "123") {
     userStore.login(login.value);
-    router.push({ name: "AdminPanel" });
   }
 }
 
