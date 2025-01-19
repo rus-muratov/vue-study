@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Catalog from '../components/Catalog.vue'
+import {useUserStore} from "../store/useUserStore.js";
+
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +37,17 @@ const router = createRouter({
         },
 
     ],
+})
+
+router.beforeEach(async (to, from) => {
+    const userStore = useUserStore();
+    if (
+        !userStore.isLoggedIn &&
+        to.name === 'Basket'
+    ) {
+
+        return { name: 'Login' }
+    }
 })
 
 export default router
