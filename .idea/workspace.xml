@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bac9db93-0c9e-4354-92fc-cf6a275b3e22" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playwright.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vite.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/formApi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/moks.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/vue.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AddGoodsForm.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Card.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Catalog.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LogInfo.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/OrderForm.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Search.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserForm.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layout/MainLayout.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/spec/AddProductsToBasket.spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/spec/GetProducts.spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/spec/Login.spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/basketStore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/productStore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/useUserStore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AdminView.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/BasketView.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/DetailProductView.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/MainView.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-results.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-results/.last-run.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/e2e/card.spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/e2e/login.spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vite.config.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Vue Composition API Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\OSPanel\modules\php\PHP_8.1\php.exe" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2pJBjKXOkz2Sb0aXCwCNC170yNt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Vitest.Add to Cart.adds to cart.executor": "Run",
+    "Vitest.Add to Cart.executor": "Run",
+    "Vitest.AdminView Tests.executor": "Run",
+    "Vitest.AdminView Tests.renders the admin view correctly.executor": "Run",
+    "Vitest.All Tests.executor": "Run",
+    "Vitest.Card Component Tests.executor": "Run",
+    "Vitest.GetProducts.spec.js.executor": "Run",
+    "Vitest.Login.executor": "Run",
+    "Vitest.LoginComponent.does not log in a user with invalid credentials.executor": "Run",
+    "Vitest.LoginComponent.executor": "Run",
+    "Vitest.LoginComponent.logs in a user with valid credentials.executor": "Run",
+    "Vitest.LoginComponent.logs out the user and redirects to Main.executor": "Run",
+    "Vitest.adds to cart.executor": "Run",
+    "Vitest.fetchProducts.executor": "Run",
+    "Vitest.fetchProducts.fetches products and updates the state.executor": "Run",
+    "Vitest.remove item from cart .executor": "Run",
+    "git-widget-placeholder": "v7-electron",
+    "last_opened_file_path": "C:/OSPanel/domains/localhost/vue-study/electron-app/src/renderer/src/assets/wallpapers",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\OSPanel\\domains\\localhost\\vue-study\\node_modules\\prettier",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2024.2.0.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\OSPanel\domains\localhost\vue-study\electron-app\src\renderer\src\assets\wallpapers" />
+      <recent name="C:\OSPanel\domains\localhost\vue-study\tests\e2e" />
+      <recent name="C:\OSPanel\domains\localhost\vue-study" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\OSPanel\domains\localhost\vue-study" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Vitest.Add to Cart">
+    <configuration name="Add to Cart" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/spec/AddProductsToBasket.spec.js" />
+      <test-names>
+        <test-name value="Add to Cart" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Add to Cart.adds to cart" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/spec/AddProductsToBasket.spec.js" />
+      <test-names>
+        <test-name value="Add to Cart" />
+        <test-name value="adds to cart" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Card Component Tests" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/tests/e2e/card.spec.js" />
+      <test-names>
+        <test-name value="Card Component Tests" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="Login" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/spec/Login.spec.js" />
+      <test-names>
+        <test-name value="Login" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="fetchProducts" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/spec/GetProducts.spec.js" />
+      <test-names>
+        <test-name value="fetchProducts" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Vitest.Add to Cart" />
+        <item itemvalue="Vitest.fetchProducts" />
+        <item itemvalue="Vitest.Login" />
+        <item itemvalue="Vitest.Card Component Tests" />
+        <item itemvalue="Vitest.Add to Cart.adds to cart" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-PS-242.20224.427" />
+        <option value="bundled-php-predefined-a98d8de5180a-d6acee4cb394-com.jetbrains.php.sharedIndexes-PS-242.20224.427" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bac9db93-0c9e-4354-92fc-cf6a275b3e22" name="Changes" comment="" />
+      <created>1732474431512</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732474431512</updated>
+      <workItem from="1732474432541" duration="6531000" />
+      <workItem from="1733077750109" duration="13034000" />
+      <workItem from="1733576764489" duration="7818000" />
+      <workItem from="1733735749635" duration="49000" />
+      <workItem from="1734262943849" duration="2928000" />
+      <workItem from="1734781918682" duration="2592000" />
+      <workItem from="1735413131987" duration="10203000" />
+      <workItem from="1735493792577" duration="14292000" />
+      <workItem from="1735908354602" duration="19226000" />
+      <workItem from="1736094124166" duration="13865000" />
+      <workItem from="1736159929794" duration="7000" />
+      <workItem from="1736702962144" duration="5482000" />
+      <workItem from="1736763537938" duration="10000" />
+      <workItem from="1736791729699" duration="6434000" />
+      <workItem from="1736850637577" duration="7000" />
+      <workItem from="1736879890934" duration="5726000" />
+      <workItem from="1736929434295" duration="1229000" />
+      <workItem from="1736951564698" duration="9821000" />
+      <workItem from="1737042867762" duration="8097000" />
+      <workItem from="1737128627601" duration="12000" />
+      <workItem from="1737306412443" duration="3101000" />
+      <workItem from="1737310302055" duration="6124000" />
+      <workItem from="1737363291296" duration="10000" />
+      <workItem from="1737482635326" duration="9323000" />
+      <workItem from="1737538153001" duration="9000" />
+      <workItem from="1737571488967" duration="1052000" />
+      <workItem from="1737572585251" duration="5482000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
